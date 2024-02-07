@@ -1,7 +1,12 @@
 <template>
   <div>
     <h1>Table</h1>
-    <Table />
+    <Table
+      :fields="fields"
+      :fields1="fields1"
+      :items2="items2"
+      :items="items"
+    />
   </div>
 </template>
 <script>
@@ -9,6 +14,220 @@ import Table from "./components/Table.vue";
 export default {
   components: {
     Table,
+  },
+  data() {
+    return {
+      fields1: [
+        {
+          key: "id",
+          label: "Label",
+          sort: "Sort",
+          isAmount: "isAmount ",
+          class: "Class",
+        },
+      ],
+      fields: ["id", "name", "status", "age", "adress", "role"],
+      items: [
+        {
+          id: 1,
+          age: 25,
+          name: "John Doe",
+          address: "123 Main St",
+          status: "Active",
+          role: "Admin",
+          amount: 1000000,
+        },
+        {
+          id: 2,
+          age: 30,
+          name: "Jane Smith",
+          address: "456 Elm St",
+          status: "Inactive",
+          role: "User",
+        },
+        {
+          id: 3,
+          age: 35,
+          name: "Bob Johnson",
+          address: "789 Oak St",
+          status: "Active",
+          role: "Admin",
+        },
+        {
+          id: 4,
+          age: 28,
+          name: "Alice Brown",
+          address: "246 Pine St",
+          status: "Inactive",
+          role: "User",
+        },
+        {
+          id: 5,
+          age: 32,
+          name: "Michael Wilson",
+          address: "135 Cedar St",
+          status: "Active",
+          role: "Admin",
+        },
+        {
+          id: 6,
+          age: 29,
+          name: "Emily Jones",
+          address: "789 Maple St",
+          status: "Inactive",
+          role: "User",
+        },
+        {
+          id: 7,
+          age: 31,
+          name: "David Lee",
+          address: "357 Birch St",
+          status: "Active",
+          role: "Admin",
+        },
+        {
+          id: 8,
+          age: 26,
+          name: "Sophia Davis",
+          address: "951 Willow St",
+          status: "Inactive",
+          role: "User",
+        },
+        {
+          id: 9,
+          age: 33,
+          name: "Emma Wilson",
+          address: "246 Elm St",
+          status: "Active",
+          role: "Admin",
+        },
+        {
+          id: 10,
+          age: 27,
+          name: "James Taylor",
+          address: "357 Oak St",
+          status: "Inactive",
+          role: "User",
+        },
+        {
+          id: 11,
+          age: 34,
+          name: "Olivia Martinez",
+          address: "579 Cedar St",
+          status: "Active",
+          role: "Admin",
+        },
+        {
+          id: 12,
+          age: 24,
+          name: "Daniel Harris",
+          address: "951 Maple St",
+          status: "Inactive",
+          role: "User",
+        },
+        {
+          id: 13,
+          age: 36,
+          name: "Liam Rodriguez",
+          address: "357 Pine St",
+          status: "Active",
+          role: "Admin",
+        },
+        {
+          id: 14,
+          age: 23,
+          name: "Ava Miller",
+          address: "789 Birch St",
+          status: "Inactive",
+          role: "User",
+        },
+        {
+          id: 15,
+          age: 37,
+          name: "Mia Brown",
+          address: "246 Willow St",
+          status: "Active",
+          role: "Admin",
+        },
+        {
+          id: 16,
+          age: 22,
+          name: "Noah Jackson",
+          address: "357 Maple St",
+          status: "Inactive",
+          role: "User",
+        },
+        {
+          id: 17,
+          age: 38,
+          name: "Ethan White",
+          address: "579 Oak St",
+          status: "Active",
+          role: "Admin",
+        },
+        {
+          id: 18,
+          age: 21,
+          name: "Isabella Harris",
+          address: "951 Cedar St",
+          status: "Inactive",
+          role: "User",
+        },
+        {
+          id: 19,
+          age: 39,
+          name: "Aiden Martinez",
+          address: "357 Elm St",
+          status: "Active",
+          role: "Admin",
+        },
+        {
+          id: 20,
+          age: 20,
+          name: "Sophie Taylor",
+          address: "789 Pine St",
+          status: "Inactive",
+          role: "User",
+        },
+      ],
+      items2: [
+        {
+          id: 1,
+          label: "label",
+          class: "bg-success",
+          sort: true,
+          isAmount: false,
+        },
+        {
+          id: 2,
+          label: "label",
+          class: "bg-red",
+          sort: false,
+          isAmount: false,
+        },
+        {
+          id: 3,
+          label: "label",
+          class: "bg-red",
+          sort: true,
+          isAmount: true,
+        },
+        {
+          id: 4,
+          label: "label",
+          class: "bg-success",
+          sort: false,
+          isAmount: true,
+        },
+        {
+          id: 5,
+          label: "label",
+          class: "bg-red",
+          sort: true,
+          isAmount: false,
+        },
+      ],
+    };
   },
 };
 </script>

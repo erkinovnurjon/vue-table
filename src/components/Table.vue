@@ -1,259 +1,125 @@
 <template>
   <div>
+    <b-icon icon="arrow-up"></b-icon>
     <table class="custom-table">
       <thead>
         <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Status</th>
-          <th>Age</th>
-          <th>Address</th>
-          <th>Role</th>
+          <th v-for="(field, index) in fields" :key="index">{{ field }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(people, index) in paginatedPeople" :key="index">
-          <td>{{ people.id }}</td>
-          <td>{{ people.name }}</td>
+        <tr v-for="(item, index) in paginatedPeople" :key="index">
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
           <td>
             <button
               :class="{
-                'active-status': people.status === 'Active',
-                'inactive-status': people.status === 'Inactive',
+                'active-status': item.status === 'Active',
+                'inactive-status': item.status === 'Inactive',
               }"
             >
-              {{ people.status }}
+              {{ item.status }}
             </button>
           </td>
-          <td>{{ people.age }}</td>
-          <td>{{ people.address }}</td>
-          <td>{{ people.role }}</td>
+          <td>{{ item.age }}</td>
+          <td>{{ item.address }}</td>
+          <td>{{ item.role }}</td>
         </tr>
       </tbody>
     </table>
-    <div class="page-buttons">
-      <button
-        class="page-button"
-        @click="prevPage"
-        :disabled="currentPage === 1"
-        :page="currentPage"
-      >
-        Previous
-      </button>
-      <div class="pagination">
-        <button
-          v-for="page in totalPages"
-          :key="page"
-          @click="changePage(page)"
-          :class="{
-            'page-button': true,
-            'active-page': currentPage === page,
-            'other-page': currentPage !== page,
-          }"
-        >
-          {{ page }}
-        </button>
+    <div>
+      <select class="select" v-model="pageSize" @change="changePageSize">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+      </select>
+      <div class="page-buttons">
+        <div class="pagination">
+          <button
+            class="page-button"
+            @click="prevPage"
+            :disabled="currentPage === 1"
+            :page="currentPage"
+          >
+            prev
+          </button>
+          <button
+            v-for="page in totalPages"
+            :key="page"
+            @click="changePage(page)"
+            :class="{
+              'page-button': true,
+              'active-page': currentPage === page,
+              'other-page': currentPage !== page,
+            }"
+          >
+            {{ page }}
+          </button>
+          <button
+            class="page-button"
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+          >
+            Next
+          </button>
+        </div>
       </div>
-
-      <button
-        class="page-button"
-        @click="nextPage"
-        :disabled="currentPage === totalPages"
-      >
-        Next
-      </button>
     </div>
   </div>
 </template>
 
 <script>
 import Button from "./shared/Button.vue";
+import Select from "./shared/Select.vue";
 
 export default {
   components: {
     Button,
+    Select,
+  },
+  props: {
+    fields: {
+      type: Array,
+      required: true,
+    },
+    items: {
+      type: Array,
+      required: true,
+    },
+    fields1: {
+      type: Array,
+      required: true,
+    },
+    items2: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      people: [
-        {
-          id: 1,
-          age: 25,
-          name: "John Doe",
-          address: "123 Main St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 2,
-          age: 30,
-          name: "Jane Smith",
-          address: "456 Elm St",
-          status: "Inactive",
-          role: "User",
-        },
-        {
-          id: 3,
-          age: 35,
-          name: "Bob Johnson",
-          address: "789 Oak St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 4,
-          age: 28,
-          name: "Alice Brown",
-          address: "246 Pine St",
-          status: "Inactive",
-          role: "User",
-        },
-        {
-          id: 5,
-          age: 32,
-          name: "Michael Wilson",
-          address: "135 Cedar St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 6,
-          age: 29,
-          name: "Emily Jones",
-          address: "789 Maple St",
-          status: "Inactive",
-          role: "User",
-        },
-        {
-          id: 7,
-          age: 31,
-          name: "David Lee",
-          address: "357 Birch St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 8,
-          age: 26,
-          name: "Sophia Davis",
-          address: "951 Willow St",
-          status: "Inactive",
-          role: "User",
-        },
-        {
-          id: 9,
-          age: 33,
-          name: "Emma Wilson",
-          address: "246 Elm St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 10,
-          age: 27,
-          name: "James Taylor",
-          address: "357 Oak St",
-          status: "Inactive",
-          role: "User",
-        },
-        {
-          id: 11,
-          age: 34,
-          name: "Olivia Martinez",
-          address: "579 Cedar St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 12,
-          age: 24,
-          name: "Daniel Harris",
-          address: "951 Maple St",
-          status: "Inactive",
-          role: "User",
-        },
-        {
-          id: 13,
-          age: 36,
-          name: "Liam Rodriguez",
-          address: "357 Pine St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 14,
-          age: 23,
-          name: "Ava Miller",
-          address: "789 Birch St",
-          status: "Inactive",
-          role: "User",
-        },
-        {
-          id: 15,
-          age: 37,
-          name: "Mia Brown",
-          address: "246 Willow St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 16,
-          age: 22,
-          name: "Noah Jackson",
-          address: "357 Maple St",
-          status: "Inactive",
-          role: "User",
-        },
-        {
-          id: 17,
-          age: 38,
-          name: "Ethan White",
-          address: "579 Oak St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 18,
-          age: 21,
-          name: "Isabella Harris",
-          address: "951 Cedar St",
-          status: "Inactive",
-          role: "User",
-        },
-        {
-          id: 19,
-          age: 39,
-          name: "Aiden Martinez",
-          address: "357 Elm St",
-          status: "Active",
-          role: "Admin",
-        },
-        {
-          id: 20,
-          age: 20,
-          name: "Sophie Taylor",
-          address: "789 Pine St",
-          status: "Inactive",
-          role: "User",
-        },
-      ],
       currentPage: 1,
       pageSize: 5,
     };
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.people.length / this.pageSize);
+      return Math.ceil(this.items.length / this.pageSize);
     },
     paginatedPeople() {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
-      return this.people.slice(startIndex, endIndex);
+      return this.items.slice(startIndex, endIndex);
     },
   },
   methods: {
     changePage(page) {
       this.currentPage = page;
+    },
+    changePageSize(event) {
+      const value = event.target.value;
+      this.pageSize = parseInt(value);
+      this.$emit("change", this.pageSize);
     },
     nextPage() {
       if (this.currentPage < this.totalPages) {
@@ -308,9 +174,15 @@ export default {
 .inactive-status:hover {
   opacity: 0.7;
 }
+td:hover {
+  background-color: #ddd;
+}
+td:active {
+  border-color: #f2f2f2;
+}
 .page-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   border: 0.5px solid #ddd;
 }

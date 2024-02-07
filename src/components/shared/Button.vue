@@ -28,3 +28,18 @@ export default {
   transition: all ease 0.5s;
 }
 </style>
+
+<!-- <td>{{ item.name }}</td>
+          <td>
+            <button
+              :class="{
+                'active-status': item.status === 'Active',
+                'inactive-status': item.status === 'Inactive',
+              }"
+            >
+              {{ item.status }}
+            </button>
+          </td>
+          <td>{{ item.age }}</td>
+          <td>{{ item.address }}</td>
+          <td>{{ item.role }}</td> -->
